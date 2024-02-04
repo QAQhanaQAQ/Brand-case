@@ -104,7 +104,7 @@ public class BrandServlet extends BaseServlet{
      * @throws IOException
      */
     public void selectByPageAndCondition(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 1.接受 当前页码 和 每页展示条数    url?currentPage=1&pageSize=5
+//1. 接收 当前页码 和 每页展示条数    url?currentPage=1&pageSize=5
         String _currentPage = req.getParameter("currentPage");
         String _pageSize = req.getParameter("pageSize");
 
@@ -113,17 +113,17 @@ public class BrandServlet extends BaseServlet{
 
         // 获取查询条件对象
         BufferedReader br = req.getReader();
-        String params = br.readLine();
+        String params = br.readLine();//json字符串
 
         //转为 Brand
         Brand brand = JSON.parseObject(params, Brand.class);
 
-        // 2.调用service查询
-        PageBean<Brand> pageBean = brandService.selectByPageAndCondition(currentPage, pageSize, brand);
+        //2. 调用service查询
+        PageBean<Brand> pageBean = brandService.selectByPageAndCondition(currentPage,pageSize,brand);
 
-        // 2.转为json
+        //2. 转为JSON
         String jsonString = JSON.toJSONString(pageBean);
-        // 3.写数据
+        //3. 写数据
         resp.setContentType("text/json;charset=utf-8");
         resp.getWriter().write(jsonString);
 

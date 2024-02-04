@@ -124,7 +124,7 @@
                     label="排序">
             </el-table-column>
             <el-table-column
-                    prop="status"
+                    prop="statusStr"
                     align="center"
                     label="当前状态">
             </el-table-column>
@@ -196,17 +196,16 @@
                            _this.tableData = resp.data;
                        })*/
 
-                var _this = this;
 
                 axios({
                     method: "post",
-                    url: "http://localhost:8080/mybrand-case/brand/selectTotalCountByCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+                    url: "http://localhost:8080/mybrand-case/brand/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
                     data: this.brand
-                }).then(function (resp) {
+                }).then(resp =>{
                     //设置表格数据
-                    _this.tableData = resp.data.rows; // {rows:[],totalCount:100}
+                    this.tableData = resp.data.rows; // {rows:[],totalCount:100}
                     //设置总记录数
-                    _this.totalCount = resp.data.totalCount;
+                    this.totalCount = resp.data.totalCount;
                 });
 
             },
@@ -223,7 +222,7 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
 
-                console.log(this.multipleSelection)
+                //console.log(this.multipleSelection)
             },
             // 查询方法
             onSubmit() {
@@ -241,7 +240,7 @@
                     url: "http://localhost:8080/mybrand-case/brand/add",
                     data: _this.brand
                 }).then(function (resp) {
-                    if (resp.data = "success") {
+                    if (resp.data == "success") {
                         //添加成功
 
                         //关闭窗口
@@ -255,7 +254,7 @@
                             type: 'success'
                         });
                     }
-                });
+                })
             },
 
             //分页
@@ -297,7 +296,7 @@
                         url: "http://localhost:8080/mybrand-case/brand/deleteByIds",
                         data: _this.selectedIds
                     }).then(function (resp) {
-                        if (resp.data = "success") {
+                        if (resp.data == "success") {
                             //删除成功
 
                             //重新查询数据
@@ -308,7 +307,7 @@
                                 type: 'success'
                             });
                         }
-                    });
+                    })
                 }).catch(() => {
                     //用户点击取消按钮
                     this.$message({

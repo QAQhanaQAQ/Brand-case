@@ -97,7 +97,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public PageBean<Brand> selectByPageAndCondition(int currentPage, int pageSize, Brand brand) {
-           //2. 获取SqlSession对象
+        //2. 获取SqlSession对象
         SqlSession sqlSession = factory.openSession();
         //3. 获取BrandMapper
         BrandMapper mapper = sqlSession.getMapper(BrandMapper.class);
@@ -134,6 +134,5 @@ public class BrandServiceImpl implements BrandService {
         sqlSession.close();
 
         return pageBean;
-
     }
 }
